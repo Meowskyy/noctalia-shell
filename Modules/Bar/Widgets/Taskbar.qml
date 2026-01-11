@@ -549,7 +549,7 @@ Rectangle {
 
         readonly property string title: modelData.title || modelData.appId || "Unknown application"
         readonly property color titleBgColor: (isHovered || isFocused) ? Color.mHover : Style.capsuleColor
-        readonly property color titleFgColor: (isHovered || isFocused) ? Color.mOnHover : Color.mOnSurface
+        readonly property color titleFgColor: (isHovered || isFocused) ? Color.mOnSurface : Color.mOnSurface
 
         Layout.preferredWidth: root.showTitle ? Math.round(contentWidth + Style.marginM * 2) : Math.round(contentWidth) // Add margins for both pinned and running apps
         Layout.preferredHeight: root.itemSize

@@ -166,7 +166,11 @@
       "use-fixed-width-description": "When enabled, the widget will always use the maximum width instead of dynamically adjusting to content.",
       "use-fixed-width-label": "Use fixed width",
       "visualizer-type-description": "Choose the style of audio visualizer to display.",
-      "visualizer-type-label": "Visualizer type"
+      "visualizer-type-label": "Visualizer type",
+      "enable-scroll-wheel-description": "Switch between tracks using the mouse scroll wheel.",
+      "enable-scroll-wheel-label": "Scroll to switch tracks",
+      "invert-scroll-wheel-description": "Reverse the scroll direction for switching tracks.",
+      "invert-scroll-wheel-label": "Invert scroll direction"
     },
     "notification-history": {
       "hide-widget-when-zero-description": "Hide the notification icon when there are no unread notifications.",
@@ -242,8 +246,12 @@
     "workspace": {
       "character-count-description": "Number of characters to display from workspace names (1-10).",
       "character-count-label": "Character count",
+      "keep-width-description": "Maintain a consistent width for each workspace, regardless of label length.",
+      "keep-width-label": "Keep width",
       "enable-scrollwheel-description": "Switch between workspaces using the mouse scroll wheel.",
       "enable-scrollwheel-label": "Scroll to switch workspaces",
+      "invert-scrollwheel-description": "Reverse the scroll direction for switching workspaces.",
+      "invert-scrollwheel-label": "Invert scroll direction",
       "follow-focused-screen-description": "Display workspaces from the currently focused screen, rather than the screen where the bar is located.",
       "follow-focused-screen-label": "Follow focused screen",
       "grouped-border-opacity-description": "Set the opacity level for workspace container borders",

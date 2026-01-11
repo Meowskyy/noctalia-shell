@@ -44,6 +44,12 @@ Item {
   readonly property bool showProgressRing: (widgetSettings.showProgressRing !== undefined) ? widgetSettings.showProgressRing : widgetMetadata.showProgressRing
   readonly property bool useFixedWidth: (widgetSettings.useFixedWidth !== undefined) ? widgetSettings.useFixedWidth : widgetMetadata.useFixedWidth
   readonly property real maxWidth: (widgetSettings.maxWidth !== undefined) ? widgetSettings.maxWidth : Math.max(widgetMetadata.maxWidth, screen ? screen.width * 0.06 : 0)
+  readonly property bool enableScrollWheel: (widgetSettings.enableScrollWheel !== undefined) ? widgetSettings.enableScrollWheel : widgetMetadata.enableScrollWheel
+  readonly property bool invertScrollWheel: (widgetSettings.invertScrollWheel !== undefined) ? widgetSettings.invertScrollWheel : widgetMetadata.invertScrollWheel
+
+  // Wheel scroll handling
+  property int wheelAccumulatedDelta: 0
+  property bool wheelCooldown: false
 
   // Dimensions
   readonly property int artSize: Style.toOdd(Style.capsuleHeight * 0.75)
@@ -148,6 +154,56 @@ Item {
     NumberAnimation {
       duration: Style.animationNormal
       easing.type: Easing.InOutCubic
+    }
+  }
+
+  // Debounce timer for wheel interactions
+  Timer {
+    id: wheelDebounce
+    interval: 1
+    repeat: false
+    onTriggered: {
+      root.wheelCooldown = false;
+      root.wheelAccumulatedDelta = 0;
+    }
+  }
+
+  // Scroll to switch workspaces
+  WheelHandler {
+    id: wheelHandler
+    target: root
+    acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+    enabled: root.enableScrollWheel
+    onWheel: function (event) {
+      if (root.wheelCooldown)
+        return;
+      // Prefer vertical delta, fall back to horizontal if needed
+      var dy = event.angleDelta.y;
+      var dx = event.angleDelta.x;
+      var useDy = Math.abs(dy) >= Math.abs(dx);
+      var delta = useDy ? dy : dx;
+      // One notch is typically 120
+      root.wheelAccumulatedDelta += delta;
+      var step = 120;
+      if (Math.abs(root.wheelAccumulatedDelta) >= step) {
+        var direction = root.wheelAccumulatedDelta > 0 ? -1 : 1;
+        if (root.invertScrollWheel) {
+          direction = -direction;
+        }
+
+        if (hasPlayer) {
+          if (direction == 1  && MediaService.canGoNext) {
+            MediaService.next();
+          } else if (MediaService.canGoPrevious) {
+            MediaService.previous();
+          }
+        }
+
+        root.wheelCooldown = true;
+        wheelDebounce.restart();
+        root.wheelAccumulatedDelta = 0;
+        event.accepted = true;
+      }
     }
   }
 

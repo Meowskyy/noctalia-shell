@@ -26,6 +26,8 @@ ColumnLayout {
   property bool valueUseFixedWidth: (widgetData && widgetData.useFixedWidth !== undefined) ? widgetData.useFixedWidth : (widgetMetadata && widgetMetadata.useFixedWidth !== undefined ? widgetMetadata.useFixedWidth : false)
   property bool valueShowProgressRing: (widgetData && widgetData.showProgressRing !== undefined) ? widgetData.showProgressRing : (widgetMetadata && widgetMetadata.showProgressRing !== undefined ? widgetMetadata.showProgressRing : true)
   property bool valueCompactMode: widgetData.compactMode !== undefined ? widgetData.compactMode : widgetMetadata.compactMode
+  property bool valueEnableScrollWheel: widgetData.enableScrollWheel !== undefined ? widgetData.enableScrollWheel : widgetMetadata.enableScrollWheel
+  property bool valueInvertScrollWheel: widgetData.invertScrollWheel !== undefined ? widgetData.invertScrollWheel : widgetMetadata.invertScrollWheel
 
   Component.onCompleted: {
     if (widgetData && widgetData.hideMode !== undefined) {
@@ -47,6 +49,8 @@ ColumnLayout {
     settings.useFixedWidth = valueUseFixedWidth;
     settings.showProgressRing = valueShowProgressRing;
     settings.compactMode = valueCompactMode;
+    settings.enableScrollWheel = valueEnableScrollWheel;
+    settings.invertScrollWheel = valueInvertScrollWheel;
     return settings;
   }
 
@@ -163,6 +167,26 @@ ColumnLayout {
     currentKey: valueScrollingMode
     onSelected: key => valueScrollingMode = key
     minimumWidth: 200
+  }
+
+  NDivider {
+    Layout.fillWidth: true
+    Layout.topMargin: Style.marginS
+  }
+
+  NToggle {
+    label: I18n.tr("bar.media-mini.enable-scroll-wheel-label")
+    description: I18n.tr("bar.media-mini.enable-scroll-wheel-description")
+    checked: valueEnableScrollWheel
+    onToggled: checked => valueEnableScrollWheel = checked
+  }
+
+  NToggle {
+    label: I18n.tr("bar.media-mini.invert-scroll-wheel-label")
+    description: I18n.tr("bar.media-mini.invert-scroll-wheel-description")
+    checked: valueInvertScrollWheel
+    onToggled: checked => valueInvertScrollWheel = checked
+    visible: valueEnableScrollWheel === true
   }
 
   NDivider {

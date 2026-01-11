@@ -39,6 +39,7 @@ Item {
   readonly property real baseDimensionRatio: 0.65 * (widgetSettings.labelMode === "none" ? 0.75 : 1)
 
   readonly property string labelMode: (widgetSettings.labelMode !== undefined) ? widgetSettings.labelMode : widgetMetadata.labelMode
+  readonly property bool keepWidth: (widgetSettings.keepWidth !== undefined) ? widgetSettings.keepWidth : widgetMetadata.keepWidth
   readonly property bool hideUnoccupied: (widgetSettings.hideUnoccupied !== undefined) ? widgetSettings.hideUnoccupied : widgetMetadata.hideUnoccupied
   readonly property bool followFocusedScreen: (widgetSettings.followFocusedScreen !== undefined) ? widgetSettings.followFocusedScreen : widgetMetadata.followFocusedScreen
   readonly property int characterCount: isVertical ? 2 : ((widgetSettings.characterCount !== undefined) ? widgetSettings.characterCount : widgetMetadata.characterCount)
@@ -50,6 +51,7 @@ Item {
   readonly property real unfocusedIconsOpacity: (widgetSettings.unfocusedIconsOpacity !== undefined) ? widgetSettings.unfocusedIconsOpacity : widgetMetadata.unfocusedIconsOpacity
   readonly property real groupedBorderOpacity: (widgetSettings.groupedBorderOpacity !== undefined) ? widgetSettings.groupedBorderOpacity : widgetMetadata.groupedBorderOpacity
   readonly property bool enableScrollWheel: (widgetSettings.enableScrollWheel !== undefined) ? widgetSettings.enableScrollWheel : widgetMetadata.enableScrollWheel
+  readonly property bool invertScrollWheel: (widgetSettings.invertScrollWheel !== undefined) ? widgetSettings.invertScrollWheel : widgetMetadata.invertScrollWheel
   readonly property real iconScale: (widgetSettings.iconScale !== undefined) ? widgetSettings.iconScale : widgetMetadata.iconScale
 
   // Only for grouped mode / show apps
@@ -105,7 +107,7 @@ Item {
 
   function getWorkspaceWidth(ws) {
     const d = Math.round(Style.capsuleHeight * root.baseDimensionRatio);
-    const factor = ws.isActive ? 2.2 : 1;
+    const factor = (ws.isActive && !root.keepWidth) ? 2.2 : 1;
 
     // Don't calculate text width if labels are off
     if (labelMode === "none") {
@@ -440,7 +442,7 @@ Item {
   // Debounce timer for wheel interactions
   Timer {
     id: wheelDebounce
-    interval: 150
+    interval: 1
     repeat: false
     onTriggered: {
       root.wheelCooldown = false;
@@ -467,6 +469,7 @@ Item {
       var step = 120;
       if (Math.abs(root.wheelAccumulatedDelta) >= step) {
         var direction = root.wheelAccumulatedDelta > 0 ? -1 : 1;
+        if (root.invertScrollWheel) direction = -direction;
         // For vertical layout, natural mapping: wheel up -> previous, down -> next (already handled by sign)
         // For horizontal layout, same mapping using vertical wheel
         root.switchByOffset(direction);
@@ -527,9 +530,9 @@ Item {
                   if (model.isUrgent)
                     return Color.mOnError;
                   if (model.isOccupied)
-                    return Color.mOnSecondary;
+                    return Color.mOnSurface;
 
-                  return Color.mOnSecondary;
+                  return Color.mOnSurface;
                 }
               }
             }
@@ -542,9 +545,9 @@ Item {
             if (model.isUrgent)
               return Color.mError;
             if (model.isOccupied)
-              return Color.mSecondary;
+              return Color.mOnTertiary; // BG COLOR SOMETHING OPEN
 
-            return Qt.alpha(Color.mSecondary, 0.3);
+            return Qt.alpha(Color.mOnTertiary, 0.35); // BG COLOR BUT NOTHING OPEN
           }
           z: 0
 

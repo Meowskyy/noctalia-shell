@@ -103,7 +103,9 @@
       "panelShowAlbumArt": true,
       "panelShowVisualizer": true,
       "compactShowAlbumArt": true,
-      "compactShowVisualizer": false
+      "compactShowVisualizer": false,
+      "enableScrollWheel": true,
+      "invertScrollWheel": false
     },
     "Microphone": {
       "displayMode": "onhover",
@@ -163,6 +165,7 @@
     },
     "Workspace": {
       "labelMode": "index",
+      "keepWidth": false,
       "followFocusedScreen": false,
       "hideUnoccupied": false,
       "characterCount": 2,
@@ -172,6 +175,7 @@
       "unfocusedIconsOpacity": 1,
       "groupedBorderOpacity": 1,
       "enableScrollWheel": true,
+      "invertScrollWheel": false,
       "iconScale": 0.8
     },
     "Volume": {

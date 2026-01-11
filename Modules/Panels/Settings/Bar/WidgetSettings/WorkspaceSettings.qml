@@ -13,6 +13,7 @@ ColumnLayout {
   property var widgetMetadata: null
 
   property string valueLabelMode: widgetData.labelMode !== undefined ? widgetData.labelMode : widgetMetadata.labelMode
+  property bool valueKeepWidth: widgetData.keepWidth !== undefined ? widgetData.keepWidth : widgetMetadata.keepWidth
   property bool valueHideUnoccupied: widgetData.hideUnoccupied !== undefined ? widgetData.hideUnoccupied : widgetMetadata.hideUnoccupied
   property bool valueFollowFocusedScreen: widgetData.followFocusedScreen !== undefined ? widgetData.followFocusedScreen : widgetMetadata.followFocusedScreen
   property int valueCharacterCount: widgetData.characterCount !== undefined ? widgetData.characterCount : widgetMetadata.characterCount
@@ -24,11 +25,13 @@ ColumnLayout {
   property real valueUnfocusedIconsOpacity: widgetData.unfocusedIconsOpacity !== undefined ? widgetData.unfocusedIconsOpacity : widgetMetadata.unfocusedIconsOpacity
   property real valueGroupedBorderOpacity: widgetData.groupedBorderOpacity !== undefined ? widgetData.groupedBorderOpacity : widgetMetadata.groupedBorderOpacity
   property bool valueEnableScrollWheel: widgetData.enableScrollWheel !== undefined ? widgetData.enableScrollWheel : widgetMetadata.enableScrollWheel
+  property bool valueInvertScrollWheel: widgetData.invertScrollWheel !== undefined ? widgetData.invertScrollWheel : widgetMetadata.invertScrollWheel
   property real valueIconScale: widgetData.iconScale !== undefined ? widgetData.iconScale : widgetMetadata.iconScale
 
   function saveSettings() {
     var settings = Object.assign({}, widgetData || {});
     settings.labelMode = valueLabelMode;
+    settings.keepWidth = valueKeepWidth;
     settings.hideUnoccupied = valueHideUnoccupied;
     settings.characterCount = valueCharacterCount;
     settings.followFocusedScreen = valueFollowFocusedScreen;
@@ -38,6 +41,7 @@ ColumnLayout {
     settings.unfocusedIconsOpacity = valueUnfocusedIconsOpacity;
     settings.groupedBorderOpacity = valueGroupedBorderOpacity;
     settings.enableScrollWheel = valueEnableScrollWheel;
+    settings.invertScrollWheel = valueInvertScrollWheel;
     settings.iconScale = valueIconScale;
     return settings;
   }
@@ -80,6 +84,13 @@ ColumnLayout {
   }
 
   NToggle {
+    label: I18n.tr("bar.workspace.keep-width-label")
+    description: I18n.tr("bar.workspace.keep-width-description")
+    checked: valueKeepWidth
+    onToggled: checked => valueKeepWidth = checked
+  }
+
+  NToggle {
     label: I18n.tr("bar.workspace.hide-unoccupied-label")
     description: I18n.tr("bar.workspace.hide-unoccupied-description")
     checked: valueHideUnoccupied
@@ -100,11 +111,23 @@ ColumnLayout {
     onToggled: checked => valueFollowFocusedScreen = checked
   }
 
+  NDivider {
+    Layout.fillWidth: true
+  }
+
   NToggle {
     label: I18n.tr("bar.workspace.enable-scrollwheel-label")
     description: I18n.tr("bar.workspace.enable-scrollwheel-description")
     checked: valueEnableScrollWheel
     onToggled: checked => valueEnableScrollWheel = checked
+  }
+
+  NToggle {
+    label: I18n.tr("bar.workspace.invert-scrollwheel-label")
+    description: I18n.tr("bar.workspace.invert-scrollwheel-description")
+    checked: valueInvertScrollWheel
+    onToggled: checked => valueInvertScrollWheel = checked
+    visible: valueEnableScrollWheel === true
   }
 
   NDivider {
