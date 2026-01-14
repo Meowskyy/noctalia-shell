@@ -40,6 +40,7 @@ Item {
 
   readonly property string labelMode: (widgetSettings.labelMode !== undefined) ? widgetSettings.labelMode : widgetMetadata.labelMode
   readonly property bool keepWidth: (widgetSettings.keepWidth !== undefined) ? widgetSettings.keepWidth : widgetMetadata.keepWidth
+  readonly property bool hasLabel: (labelMode !== "none")
   readonly property bool hideUnoccupied: (widgetSettings.hideUnoccupied !== undefined) ? widgetSettings.hideUnoccupied : widgetMetadata.hideUnoccupied
   readonly property bool followFocusedScreen: (widgetSettings.followFocusedScreen !== undefined) ? widgetSettings.followFocusedScreen : widgetMetadata.followFocusedScreen
   readonly property int characterCount: isVertical ? 2 : ((widgetSettings.characterCount !== undefined) ? widgetSettings.characterCount : widgetMetadata.characterCount)
@@ -102,8 +103,8 @@ Item {
 
   signal workspaceChanged(int workspaceId, color accentColor)
 
-  implicitWidth: showApplications ? (isVertical ? groupedGrid.implicitWidth : Math.round(groupedGrid.implicitWidth)) : (isVertical ? Style.barHeight : computeWidth())
-  implicitHeight: showApplications ? (isVertical ? Math.round(groupedGrid.implicitHeight) : Style.barHeight) : (isVertical ? computeHeight() : Style.barHeight)
+  implicitWidth: showApplications ? (isVertical ? groupedGrid.implicitWidth : Math.round(groupedGrid.implicitWidth + horizontalPadding * hasLabel)) : (isVertical ? Style.barHeight : computeWidth())
+  implicitHeight: showApplications ? (isVertical ? Math.round(groupedGrid.implicitHeight + horizontalPadding * 0.6 * hasLabel) : Style.barHeight) : (isVertical ? computeHeight() : Style.barHeight)
 
   function getWorkspaceWidth(ws) {
     const d = Math.round(Style.capsuleHeight * root.baseDimensionRatio);
@@ -1036,8 +1037,8 @@ Item {
     id: groupedGrid
     visible: showApplications
 
-    x: root.isVertical ? Style.pixelAlignCenter(parent.width, width) : Style.marginM
-    y: root.isVertical ? Style.marginM : Style.pixelAlignCenter(parent.height, height)
+    x: root.isVertical ? Style.pixelAlignCenter(parent.width, width) : Math.round(horizontalPadding * root.hasLabel)
+    y: root.isVertical ? Math.round(horizontalPadding * 0.4 * root.hasLabel) : Style.pixelAlignCenter(parent.height, height)
 
     spacing: Style.marginS
     flow: root.isVertical ? Flow.TopToBottom : Flow.LeftToRight
