@@ -14,6 +14,7 @@
     "marginHorizontal": 4,
     "outerCorners": true,
     "exclusive": true,
+    "hideOnOverview": false,
     "widgets": {
       "left": [
         {
@@ -81,7 +82,8 @@
     "shadowOffsetY": 3,
     "language": "",
     "allowPanelsOnScreenWithoutBar": true,
-    "showChangelogOnStartup": true
+    "showChangelogOnStartup": true,
+    "telemetryEnabled": true
   },
   "ui": {
     "fontDefault": "",

@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.Commons
+import qs.Services.Control
 import qs.Services.UI
 
 Singleton {
@@ -24,6 +25,9 @@ Singleton {
   // Display scale data
   property var displayScales: ({})
   property bool displayScalesLoaded: false
+
+  // Overview state (Niri-specific, defaults to false for other compositors)
+  property bool overviewActive: false
 
   // Generic events
   signal workspaceChanged
@@ -209,10 +213,20 @@ Singleton {
                                                 focusedWindowIndex = backend.focusedWindowIndex;
                                               });
 
+    // Overview state (Niri-specific)
+    if (backend.overviewActiveChanged) {
+      backend.overviewActiveChanged.connect(() => {
+                                              overviewActive = backend.overviewActive;
+                                            });
+    }
+
     // Initial sync
     syncWorkspaces();
     syncWindows();
     focusedWindowIndex = backend.focusedWindowIndex;
+    if (backend.overviewActive !== undefined) {
+      overviewActive = backend.overviewActive;
+    }
   }
 
   function syncWorkspaces() {
@@ -395,12 +409,16 @@ Singleton {
 
   function shutdown() {
     Logger.i("Compositor", "Shutdown requested");
-    Quickshell.execDetached(["sh", "-c", "systemctl poweroff || loginctl poweroff"]);
+    HooksService.executeSessionHook("shutdown", () => {
+                                      Quickshell.execDetached(["sh", "-c", "systemctl poweroff || loginctl poweroff"]);
+                                    });
   }
 
   function reboot() {
     Logger.i("Compositor", "Reboot requested");
-    Quickshell.execDetached(["sh", "-c", "systemctl reboot || loginctl reboot"]);
+    HooksService.executeSessionHook("reboot", () => {
+                                      Quickshell.execDetached(["sh", "-c", "systemctl reboot || loginctl reboot"]);
+                                    });
   }
 
   function suspend() {

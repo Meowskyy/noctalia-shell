@@ -8,7 +8,6 @@
 // Qt & Quickshell Core
 import QtQuick
 import Quickshell
-import Quickshell.Services.SystemTray
 
 // Commons & Services
 import qs.Commons
@@ -103,6 +102,7 @@ ShellRoot {
         PowerProfileService.init();
         HostService.init();
         GitHubService.init();
+        TelemetryService.init();
 
         delayedInitTimer.running = true;
         checkSetupWizard();
@@ -131,6 +131,11 @@ ShellRoot {
       IPCService {
         id: ipcService
         screenDetector: screenDetector
+      }
+
+      // CustomButtonIPCService handles IPC commands for custom buttons
+      CustomButtonIPCService {
+        id: customButtonIPCService
       }
 
       // Container for plugins Main.qml instances (must be in graphics scene)
@@ -175,17 +180,6 @@ ShellRoot {
   function checkSetupWizard() {
     // Only open the setup wizard for new users
     if (!Settings.shouldOpenSetupWizard) {
-      return;
-    }
-
-    // Wait for HostService to be fully ready
-    if (!HostService.isReady) {
-      Qt.callLater(checkSetupWizard);
-      return;
-    }
-
-    // No setup wizard on NixOS
-    if (HostService.isNixOS) {
       return;
     }
 
