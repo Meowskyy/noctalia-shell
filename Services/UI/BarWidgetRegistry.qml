@@ -177,7 +177,9 @@ Singleton {
                                     "panelShowAlbumArt": true,
                                     "panelShowVisualizer": true,
                                     "compactShowAlbumArt": true,
-                                    "compactShowVisualizer": false
+                                    "compactShowVisualizer": false,
+                                    "enableScrollWheel": true,
+                                    "invertScrollWheel": false,
                                   },
                                   "Microphone": {
                                     "displayMode": "onhover",
@@ -237,6 +239,7 @@ Singleton {
                                   },
                                   "Workspace": {
                                     "labelMode": "index",
+                                    "keepWidth": false,
                                     "followFocusedScreen": false,
                                     "hideUnoccupied": false,
                                     "characterCount": 2,
@@ -246,6 +249,7 @@ Singleton {
                                     "unfocusedIconsOpacity": 1.0,
                                     "groupedBorderOpacity": 1.0,
                                     "enableScrollWheel": true,
+                                    "invertScrollWheel": false,
                                     "iconScale": 0.8
                                   },
                                   "Volume": {
