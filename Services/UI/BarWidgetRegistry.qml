@@ -174,6 +174,7 @@ Singleton {
                                     "showProgressRing": true,
                                     "visualizerType": "linear",
                                     "compactMode": false,
+                                    "panelEnabled": true,
                                     "panelShowAlbumArt": true,
                                     "panelShowVisualizer": true,
                                     "compactShowAlbumArt": true,

@@ -174,7 +174,9 @@
       "enable-scroll-wheel-description": "Switch between tracks using the mouse scroll wheel.",
       "enable-scroll-wheel-label": "Scroll to switch tracks",
       "invert-scroll-wheel-description": "Reverse the scroll direction for switching tracks.",
-      "invert-scroll-wheel-label": "Invert scroll direction"
+      "invert-scroll-wheel-label": "Invert scroll direction",
+      "panel-enabled-description": "Enable the media player panel to access more controls and information.",
+      "panel-enabled-label": "Enable media player panel"
     },
     "notification-history": {
       "hide-widget-when-zero-description": "Hide the notification icon when there are no unread notifications.",

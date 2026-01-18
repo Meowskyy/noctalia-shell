@@ -46,6 +46,7 @@ Item {
   readonly property real maxWidth: (widgetSettings.maxWidth !== undefined) ? widgetSettings.maxWidth : Math.max(widgetMetadata.maxWidth, screen ? screen.width * 0.06 : 0)
   readonly property bool enableScrollWheel: (widgetSettings.enableScrollWheel !== undefined) ? widgetSettings.enableScrollWheel : widgetMetadata.enableScrollWheel
   readonly property bool invertScrollWheel: (widgetSettings.invertScrollWheel !== undefined) ? widgetSettings.invertScrollWheel : widgetMetadata.invertScrollWheel
+  readonly property bool panelEnabled: (widgetSettings.panelEnabled !== undefined) ? widgetSettings.panelEnabled : (widgetMetadata.panelEnabled !== undefined ? widgetMetadata.panelEnabled : false)
 
   // Wheel scroll handling
   property int wheelAccumulatedDelta: 0
@@ -345,6 +346,15 @@ Item {
           Layout.preferredHeight: visible ? artSize : 0
           Layout.alignment: Qt.AlignVCenter
 
+          NIcon {
+            icon: "media-pause"
+            pointSize: Style.barFontSize
+            color: hasPlayer ? Color.mOnSurface : Color.mOnSurfaceVariant
+            visible: !MediaService.isPlaying
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2 + (height - contentHeight) / 2
+          }
+
           ProgressRing {
             id: progressRing
             anchors.fill: parent
@@ -427,7 +437,11 @@ Item {
 
         onClicked: mouse => {
                      if (mouse.button === Qt.LeftButton) {
-                       PanelService.getPanel("mediaPlayerPanel", screen)?.toggle(container);
+                      if (root.panelEnabled) {
+                        PanelService.getPanel("mediaPlayerPanel", screen)?.toggle(container);
+                      } else {
+                        MediaService.playPause();
+                      }
                      } else if (mouse.button === Qt.RightButton) {
                        TooltipService.hide();
                        var popupWindow = PanelService.getPopupMenuWindow(screen);

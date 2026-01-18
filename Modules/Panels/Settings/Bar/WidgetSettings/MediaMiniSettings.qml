@@ -25,6 +25,7 @@ ColumnLayout {
   property int valueMaxWidth: (widgetData && widgetData.maxWidth !== undefined) ? widgetData.maxWidth : (widgetMetadata && widgetMetadata.maxWidth !== undefined ? widgetMetadata.maxWidth : 145)
   property bool valueUseFixedWidth: (widgetData && widgetData.useFixedWidth !== undefined) ? widgetData.useFixedWidth : (widgetMetadata && widgetMetadata.useFixedWidth !== undefined ? widgetMetadata.useFixedWidth : false)
   property bool valueShowProgressRing: (widgetData && widgetData.showProgressRing !== undefined) ? widgetData.showProgressRing : (widgetMetadata && widgetMetadata.showProgressRing !== undefined ? widgetMetadata.showProgressRing : true)
+  property bool valuePanelEnabled: widgetData.panelEnabled !== undefined ? widgetData.panelEnabled : widgetMetadata.panelEnabled
   property bool valueCompactMode: widgetData.compactMode !== undefined ? widgetData.compactMode : widgetMetadata.compactMode
   property bool valueEnableScrollWheel: widgetData.enableScrollWheel !== undefined ? widgetData.enableScrollWheel : widgetMetadata.enableScrollWheel
   property bool valueInvertScrollWheel: widgetData.invertScrollWheel !== undefined ? widgetData.invertScrollWheel : widgetMetadata.invertScrollWheel
@@ -48,6 +49,7 @@ ColumnLayout {
     settings.maxWidth = parseInt(widthInput.text) || widgetMetadata.maxWidth;
     settings.useFixedWidth = valueUseFixedWidth;
     settings.showProgressRing = valueShowProgressRing;
+    settings.panelEnabled = valuePanelEnabled;
     settings.compactMode = valueCompactMode;
     settings.enableScrollWheel = valueEnableScrollWheel;
     settings.invertScrollWheel = valueInvertScrollWheel;
@@ -201,10 +203,18 @@ ColumnLayout {
   }
 
   NToggle {
+    label: I18n.tr("bar.media-mini.panel-enabled-label")
+    description: I18n.tr("bar.media-mini.panel-enabled-description")
+    checked: valuePanelEnabled
+    onToggled: checked => valuePanelEnabled = checked
+  }
+
+  NToggle {
     label: I18n.tr("bar.media-mini.show-album-art-label")
     description: I18n.tr("bar.media-mini.show-album-art-description")
     checked: valuePanelShowAlbumArt
     onToggled: checked => valuePanelShowAlbumArt = checked
+    visible: valuePanelEnabled === true
   }
 
   NToggle {
@@ -212,5 +222,6 @@ ColumnLayout {
     description: I18n.tr("bar.media-mini.compact-mode-description")
     checked: valueCompactMode
     onToggled: checked => valueCompactMode = checked
+    visible: valuePanelEnabled === true
   }
 }
