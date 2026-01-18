@@ -20,6 +20,8 @@
     "raise-to-top": "Mettre en avant",
     "random-wallpaper": "Fond d'écran aléatoire",
     "run-custom-command": "Exécuter une commande personnalisée",
+    "show-active-only": "Afficher uniquement les actifs",
+    "show-all": "Tout afficher",
     "toggle-mute": "Activer/désactiver le mode muet",
     "widget-settings": "Paramètres du widget"
   },
@@ -173,8 +175,10 @@
       "visualizer-type-label": "Type de visualiseur"
     },
     "notification-history": {
-      "hide-widget-when-zero-description": "Masquer l'icône de notification quand il n'y a pas de notifications non lues.",
-      "hide-widget-when-zero-label": "Masquer l'icône quand zéro",
+      "hide-widget-when-zero-description": "Masquer l’icône de notification lorsqu’il n’y a aucune notification.",
+      "hide-widget-when-zero-label": "Masquer l’icône sans notifications",
+      "hide-widget-when-zero-unread-description": "Masquer l’icône de notification lorsqu’il n’y a aucune notification non lue.",
+      "hide-widget-when-zero-unread-label": "Masquer l’icône sans notifications non lues",
       "show-unread-badge-description": "Afficher un badge montrant le nombre de notifications non lues.",
       "show-unread-badge-label": "Afficher le badge non lu"
     },
@@ -349,6 +353,7 @@
     "connect": "Connecter",
     "connected": "Connecté",
     "connecting": "Connexion en cours...",
+    "continue": "Continuer",
     "contributors": "Contributeurs",
     "countdown": "Compte à rebours",
     "date": "Date",
@@ -359,7 +364,7 @@
     "disconnect": "Déconnecter",
     "disconnected": "Déconnecté",
     "disconnecting": "Déconnexion...",
-    "download": "Téléchargement",
+    "download": "Télécharger",
     "duration": "Durée",
     "enabled": "Activé",
     "events": "Événements",
@@ -413,6 +418,7 @@
     "random": "Aléatoire",
     "reboot": "Redémarrer",
     "refresh": "Actualiser",
+    "required": "(requis)",
     "reset": "Réinitialiser",
     "resume": "Reprendrer",
     "save": "Enregistrer",
@@ -422,7 +428,7 @@
     "security": "Sécurité",
     "select": "Sélectionner",
     "shortcuts": "Raccourcis",
-    "shutdown": "Arrêt",
+    "shutdown": "Éteindre",
     "signal": "Signal",
     "sound": "Son",
     "sources": "Sources",
@@ -440,7 +446,7 @@
     "unpair": "Déjumeler",
     "unpin": "Détacher",
     "update": "Mise à jour",
-    "upload": "Envio",
+    "upload": "Téléverser",
     "version": "Version",
     "visualizer": "Visualiseur",
     "volume": "Volume",
@@ -472,7 +478,7 @@
   "hide-modes": {
     "hidden": "Masquer quand vide",
     "idle": "Masquer quand inactif",
-    "transparent": "Transparent lorsqu'il est vide",
+    "transparent": "Transparent quand vide",
     "visible": "Toujours visible"
   },
   "launcher": {
@@ -522,7 +528,9 @@
       "emoji-loading-description": "Veuillez patienter",
       "emoji-no-recent": "Aucun emoji récent pour le moment",
       "emoji-search-description": "Rechercher et copier des émojis"
-    }
+    },
+    "result": "résultat",
+    "results": "résultats"
   },
   "lock-screen": {
     "authenticating": "Authentification...",
@@ -604,6 +612,7 @@
       "noctalia-installed-version": "Version installée :",
       "noctalia-latest-version": "Dernière version :",
       "noctalia-title": "Shell Noctalia",
+      "privacy-policy": "Politique de confidentialité",
       "support": "Soutenez-nous",
       "system-cpu": "Processeur :",
       "system-disk": "Disque :",
@@ -617,6 +626,7 @@
       "system-not-installed": "fastfetch n'est pas installé",
       "system-os": "Système d'exploitation :",
       "system-packages": "Paquets :",
+      "system-product": "Produit :",
       "system-title": "Informations système",
       "system-uptime": "Temps de disponibilité :",
       "system-wm": "WM :",
@@ -743,34 +753,15 @@
       "predefined-generate-templates-description": "Génère des modèles Matugen (GTK, thèmes de terminal, etc.) lors de l'utilisation de schémas de couleurs prédéfinis.",
       "predefined-generate-templates-label": "Générer des modèles pour les schémas prédéfinis",
       "predefined-title": "Jeux de couleurs prédéfinis",
-      "templates-compositors-description": "Thématisation du compositeur.",
-      "templates-compositors-label": "Compositeurs",
-      "templates-compositors-mango-description": "Écrire {filepath} — requiert Mango",
-      "templates-compositors-niri-description": "Écrire {filepath} — requiert Niri v25.11+",
       "templates-desc": "Appliquer des couleurs aux applications externes.",
+      "templates-filter-description": "Afficher les modèles d'une catégorie spécifique.",
+      "templates-filter-label": "Filtrer par catégorie",
       "templates-misc-description": "Créez vos propres modèles.",
       "templates-misc-label": "Avancé",
-      "templates-misc-user-templates-description": "N'activez que si vous savez ce que vous faites — consultez notre documentation en ligne",
+      "templates-misc-user-templates-description": "N'activez que si vous savez ce que vous faites — consultez notre documentation en ligne.",
       "templates-misc-user-templates-label": "Activer les modèles utilisateur",
-      "templates-programs-code-description-detected": "Appliqué au profil par défaut — détecté : {clients}",
-      "templates-programs-code-description-missing": "Aucun éditeur de code détecté (VSCode ou VSCodium)",
-      "templates-programs-description": "Thématisation spécifique aux applications.",
-      "templates-programs-discord-description": "Écrire {filepath} pour {client} — le thème doit être activé manuellement",
-      "templates-programs-discord-description-detected": "Détecté : {clients}",
-      "templates-programs-discord-description-missing": "Aucun client Discord détecté",
-      "templates-programs-emacs-description": "Doom: ~/.config/doom/themes/noctalia.el<br>Standard: ~/.emacs.d/themes/noctalia.el",
-      "templates-programs-label": "Programmes",
-      "templates-programs-pywalfox-description": "Écrire {filepath} et exécuter 'pywalfox update'",
-      "templates-programs-spicetify-description": "Écrire {filepath} — le thème Comfy doit être installé et activé manuellement",
-      "templates-programs-walker-description": "Écrire {filepath} et définir le thème sur noctalia",
-      "templates-programs-yazi-description": "Écrire {filepath} — flavor doit être activée manuellement",
-      "templates-programs-zed-description": "Écrire {filepath} — le thème Comfy doit être installé et activé manuellement",
-      "templates-programs-zen-browser-description": "Écrire {filepath} — copiez dans le fichier chrome/userChrome.css de votre profil Zen",
-      "templates-terminal-description": "Thématisation de l'émulateur de terminal.",
-      "templates-terminal-label": "Terminal",
-      "templates-ui-description": "Thématisation de l'environnement de bureau et de la boîte à outils d'interface utilisateur.",
-      "templates-ui-label": "UI",
-      "templates-ui-qt-description": "Écrire {filepath}",
+      "templates-none-detected": "Aucun détecté",
+      "templates-write-path": "Écrit : {filepath}",
       "title": "Jeu de couleurs"
     },
     "control-center": {
@@ -913,6 +904,7 @@
       "title": "Dock"
     },
     "general": {
+      "copy-settings": "Copier les paramètres",
       "fonts-default-description": "Police principale utilisée dans toute l'interface.",
       "fonts-default-label": "Police par défaut",
       "fonts-default-placeholder": "Sélectionner la police par défaut...",
@@ -947,14 +939,15 @@
       "screen-corners-show-corners-label": "Afficher les coins de l'écran",
       "screen-corners-solid-black-description": "Utilisez du noir uni au lieu de la couleur de fond de la barre.",
       "screen-corners-solid-black-label": "Coins noirs unis",
-      "screen-corners-title": "Coins de l'écran"
+      "screen-corners-title": "Coins de l'écran",
+      "settings-copied": "Paramètres copiés dans le presse-papier"
     },
     "hooks": {
       "info-command-info-description": "• Les commandes sont exécutées via le shell (sh -lc)<br>• Les commandes s'exécutent en arrière-plan (détachées)<br>• Les boutons de test s'exécutent avec les valeurs actuelles",
       "info-command-info-label": "Informations sur la commande de hook",
       "info-parameters-description": "• Crochet de fond d'écran : $1 = chemin d'accès au fond d'écran, $2 = nom de l'écran<br>• Crochet de bascule de thème : $1 = vrai/faux (état du mode sombre)<br>• Crochets de verrouillage/déverrouillage d'écran : Aucun paramètre<br>• Crochets de mode de performance : Aucun paramètre<br>• Crochet de session : $1 = action (arrêt/redémarrage)",
       "info-parameters-label": "Paramètres disponibles",
-      "performance-mode-disabled-description": "Commande à exécuter lorsque le mode performance noctalia est désactivé.",
+      "performance-mode-disabled-description": "Commande à exécuter lorsque le mode performance Noctalia est désactivé.",
       "performance-mode-disabled-label": "mode performance désactivé",
       "performance-mode-disabled-placeholder": "ex: notify-send \"Performance\" \"Mode désactivé\"",
       "performance-mode-enabled-description": "Commande à exécuter lorsque le mode performance Noctalia est activé.",
@@ -1065,7 +1058,7 @@
       "compact-lockscreen-label": "Écran de verrouillage compact",
       "lock-on-suspend-description": "Verrouiller automatiquement l'écran lors de la mise en veille du système.",
       "lock-on-suspend-label": "Verrouiller à la suspension",
-      "show-hibernate-description": "Afficher l’option 'hiberner' dans les actions d’énergie.",
+      "show-hibernate-description": "Afficher l’option 'hiberner' dans les commandes d'alimentation.",
       "show-hibernate-label": "Afficher l’hibernation",
       "show-session-buttons-description": "Autoriser l'accès aux paramètres d'alimentation depuis l'écran de verrouillage.",
       "show-session-buttons-label": "Commandes d'alimentation",
@@ -1097,6 +1090,8 @@
       "history-low-urgency-label": "Enregistrer l'urgence faible dans l'historique",
       "history-normal-urgency-description": "Enregistrer les notifications de priorité normale dans l'historique.",
       "history-normal-urgency-label": "Enregistrer l'urgence normale dans l'historique",
+      "media-toast-description": "Afficher une notification toast lorsque l'état de lecture du média change.",
+      "media-toast-label": "Média",
       "monitors-desc": "Afficher les notifications sur des moniteurs spécifiques. Par défaut, sur tous si aucun n'est choisi.",
       "settings-always-on-top-description": "Afficher les notifications au-dessus des fenêtres en plein écran et des autres applications.",
       "settings-background-opacity-description": "Ajuster l'opacité des arrière-plans de notifications.",
@@ -1164,6 +1159,8 @@
       "types-input-volume-label": "Volume d'entrée",
       "types-lockkey-description": "Afficher l'OSD lorsque Verr Maj, Verr Num ou Arrêt défil est activée ou désactivée.",
       "types-lockkey-label": "Touches de verrouillage",
+      "types-media-description": "Afficher l'OSD lorsque l'état de lecture multimédia change (lecture, pause, saut).",
+      "types-media-label": "Lecture de média",
       "types-title": "Événements de déclenchement OSD",
       "types-volume-description": "Afficher l'OSD lorsque le volume de sortie audio change.",
       "types-volume-label": "Volume de sortie"
@@ -1224,7 +1221,7 @@
       "update-error": "Échec de la mise à jour du plugin : {plugin} : {error}.",
       "update-pending": "v{current} → v{new} (nécessite Noctalia v{required})",
       "update-success": "Mise à jour du plugin {plugin} vers la version {version}.",
-      "update-version": "v{actuel} → v{nouveau}",
+      "update-version": "v{current} → v{new}",
       "updating": "Mise à jour..."
     },
     "region": {
@@ -1365,6 +1362,7 @@
     "command-example": "echo \"Bonjour le monde\"",
     "enter-command": "Entrez la commande à exécuter (application ou script personnalisé)",
     "enter-ipc-identifier": "Entrez un identifiant unique pour les commandes IPC",
+    "enter-path": "Entrez le chemin...",
     "enter-text-to-collapse": "par ex., 'rien n’est en lecture'. Utilisez /regex/ pour les modèles.",
     "enter-tooltip": "Entrer l'infobulle",
     "enter-width-pixels": "Entrez la largeur en pixels",
@@ -1396,6 +1394,7 @@
     "title": "Menu de session"
   },
   "setup": {
+    "all-done": "Terminé !",
     "appearance": {
       "subheader": "Choisissez le mode sombre et la source des couleurs (Matugen ou prédéfinie)."
     },
@@ -1403,6 +1402,11 @@
       "header": "Personnaliser votre expérience",
       "subheader": "Ajustez la position de la barre, la densité, l'échelle et plus encore."
     },
+    "skip-setup": "Ignorer la configuration",
+    "telemetry-wizard-done": "Bien reçu !",
+    "telemetry-wizard-note": "Vous avez le contrôle : activez ou désactivez cette option à tout moment dans les Paramètres",
+    "telemetry-wizard-subtitle": "Nous avons ajouté des analyses anonymes pour aider à améliorer Noctalia",
+    "telemetry-wizard-title": "Mise à jour de la confidentialité",
     "wallpaper": {
       "choose-dir": "Choisissez un répertoire contenant vos fonds d'écran",
       "dir-browse": "Parcourir le dossier",
@@ -1417,7 +1421,9 @@
       "select-prompt": "Sélectionnez un fond ci-dessous",
       "subheader": "Définissez l'ambiance avec un joli fond."
     },
-    "welcome-note": "Quelques réglages de base pour démarrer — toutes les options sont dans paramètres"
+    "welcome-note": "Quelques réglages de base pour démarrer — toutes les options sont dans paramètres",
+    "welcome-subtitle": "Personnalisons votre bureau pour qu'il soit unique",
+    "welcome-title": "Bienvenue dans Noctalia !"
   },
   "system": {
     "cpu-temperature": "{temp}°C",
@@ -1449,39 +1455,35 @@
     },
     "battery": {
       "low": "Batterie faible",
-      "low-desc": "La batterie est à {percent}%. Veuillez brancher le chargeur."
+      "low-desc": "La batterie est à {percent}%. Veuillez brancher le chargeur"
     },
     "bluetooth": {
-      "address-copied": "Adresse copiée dans le presse-papiers.",
+      "address-copied": "Adresse copiée dans le presse-papiers",
       "confirm-code": "Confirmer le code {value} sur l'autre appareil.",
-      "connect-failed": "Échec de la connexion à l’appareil.",
-      "disconnect-failed": "Échec de la déconnexion de l’appareil.",
-      "discoverable-change-failed": "Échec du changement d’état détectable.",
-      "discoverable-disabled": "Détectable désactivé.",
-      "discoverable-enabled": "Détectable activé.",
+      "connect-failed": "Échec de la connexion à l’appareil",
+      "disconnect-failed": "Échec de la déconnexion de l’appareil",
+      "discoverable-change-failed": "Échec du changement d’état détectable",
+      "discoverable-disabled": "Détectable désactivé",
+      "discoverable-enabled": "Détectable activé",
       "display-code": "Entrez le code {value} sur l'autre appareil.",
-      "forget-failed": "Échec de l’oubli de l’appareil.",
-      "pair-failed": "Échec de l’appairage de l’appareil.",
+      "forget-failed": "Échec de l’oubli de l’appareil",
+      "pair-failed": "Échec de l’appairage de l’appareil",
       "passkey-required": "Clé d'identification requise par l'appareil.",
       "pincode-required": "Code PIN requis par l'appareil.",
-      "state-change-failed": "Échec du changement d’état du Bluetooth."
+      "state-change-failed": "Échec du changement d’état du Bluetooth"
     },
     "clipboard": {
       "long-text": "Texte long",
       "unavailable": "Historique du presse-papiers indisponible",
-      "unavailable-desc": "L'application 'cliphist' n'est pas installée. Veuillez l'installer pour utiliser les fonctionnalités d'historique du presse-papiers."
+      "unavailable-desc": "L'application 'cliphist' n'est pas installée. Veuillez l'installer pour utiliser les fonctionnalités d'historique du presse-papiers"
     },
     "do-not-disturb": {
       "disabled": "'Ne pas déranger' désactivé",
-      "disabled-desc": "Affichage de toutes les notifications.",
+      "disabled-desc": "Affichage de toutes les notifications",
       "enabled": "'Ne pas déranger' activé",
-      "enabled-desc": "Vous trouverez ces notifications dans votre historique."
+      "enabled-desc": "Vous trouverez ces notifications dans votre historique"
     },
-    "internet-limited": "Connecté sans Internet.",
-    "ipc": {
-      "powerpanel-deprecated": "PowerPanel a été renommé en SessionMenu, cet appel IPC sera bientôt obsolète. Veuillez utiliser \"ipc call sessionMenu toggle\" à la place.",
-      "sidepanel-deprecated": "SidePanel a été renommé en ControlCenter, cet appel IPC sera bientôt obsolète. Veuillez utiliser \"ipc call controlCenter toggle\" à la place."
-    },
+    "internet-limited": "Connecté sans Internet",
     "keyboard-layout": {
       "changed": "Disposition du clavier changée vers {layout}.",
       "title": "Clavier"
@@ -1492,13 +1494,13 @@
       "label": "Dernier widget du centre de contrôle supprimé"
     },
     "night-light": {
-      "forced": "Activation forcée.",
-      "normal": "Mode normal.",
-      "not-installed": "wlsunset non installé."
+      "forced": "Activation forcée",
+      "normal": "Mode normal",
+      "not-installed": "wlsunset non installé"
     },
     "noctalia-performance": {
-      "disabled": "Mode performance désactivé.",
-      "enabled": "Mode performance activé.",
+      "disabled": "Mode performance désactivé",
+      "enabled": "Mode performance activé",
       "label": "Noctalia Performance"
     },
     "power-profile": {
@@ -1511,22 +1513,22 @@
       "title-predefined": "Le traitement du schéma de couleurs prédéfini a échoué"
     },
     "vpn": {
-      "connected": "Connecté à '{name}'.",
-      "disconnected": "Déconnecté de '{name}'."
+      "connected": "Connecté à '{name}'",
+      "disconnected": "Déconnecté de '{name}'"
     },
     "wallpaper-colors": {
-      "disabled": "Couleurs du fond d'écran désactivées.",
-      "enabled": "Couleurs du fond d'écran activées.",
+      "disabled": "Couleurs du fond d'écran désactivées",
+      "enabled": "Couleurs du fond d'écran activées",
       "label": "Génération de couleurs pour fonds d'écran",
-      "not-installed": "Matugen non installé — requis pour l'extraction des couleurs du fond d'écran."
+      "not-installed": "Matugen non installé — requis pour l'extraction des couleurs du fond d'écran"
     },
     "wifi": {
-      "connected": "Connecté à '{ssid}'.",
-      "connection-failed": "Échec de la connexion.",
-      "connection-timeout": "Délai de connexion dépassé.",
-      "disabled": "Désactivé.",
-      "disconnected": "Déconnecté de '{ssid}'.",
-      "enabled": "Activé.",
+      "connected": "Connecté à '{ssid}'",
+      "connection-failed": "Échec de la connexion",
+      "connection-timeout": "Délai de connexion dépassé",
+      "disabled": "Désactivé",
+      "disconnected": "Déconnecté de '{ssid}'",
+      "enabled": "Activé",
       "incorrect-password": "Mot de passe incorrect.",
       "network-not-found": "Réseau introuvable."
     }
@@ -1592,6 +1594,7 @@
     "fill-modes": {
       "crop": "Recadrer (Remplir)",
       "fit": "Ajuster (Contenir)",
+      "repeat": "Répéter (Mosaïque)",
       "stretch": "Étirer"
     },
     "no-match": "Aucun résultat trouvé.",
@@ -1692,10 +1695,13 @@
       "year-two-digit": "Année sur deux chiffres (00-99)"
     },
     "file-picker": {
+      "item": "élément",
+      "items": "éléments",
       "search-placeholder": "Rechercher des fichiers et des dossiers...",
       "select-current": "Sélectionner Actuel",
       "select-file": "Sélectionner un fichier",
       "select-folder": "Sélectionner un dossier",
+      "selected": "Sélectionné:",
       "title": "Sélecteur de fichiers"
     },
     "file-picker-title": "Sélectionner un fichier",

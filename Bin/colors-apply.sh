@@ -1,14 +1,15 @@
 #!/usr/bin/env -S bash
 
-# Ensure exactly one argument is provided.
-if [ "$#" -ne 1 ]; then
+# Ensure at least one argument is provided.
+if [ "$#" -lt 1 ]; then
     # Print usage information to standard error.
     echo "Error: No application specified." >&2
-    echo "Usage: $0 {kitty|ghostty|foot|alacritty|wezterm|fuzzel|walker|pywalfox|cava|niri|hyprland|mango}" >&2
+    echo "Usage: $0 {kitty|ghostty|foot|alacritty|wezterm|fuzzel|walker|pywalfox|cava|niri|hyprland|mango} [dark|light]" >&2
     exit 1
 fi
 
 APP_NAME="$1"
+MODE="${2:-}"  # Optional second argument for dark/light mode
 
 # --- Apply theme based on the application name ---
 case "$APP_NAME" in
@@ -202,6 +203,16 @@ vicinae)
 
 pywalfox)
     echo "🎨 Updating pywalfox themes..."
+    # Set dark/light mode first if MODE is specified
+    if [ -n "$MODE" ]; then
+        if [ "$MODE" = "dark" ] || [ "$MODE" = "light" ]; then
+            echo "Setting pywalfox to $MODE mode..."
+            pywalfox "$MODE"
+        else
+            echo "Warning: Invalid mode '$MODE'. Expected 'dark' or 'light'. Skipping mode switch." >&2
+        fi
+    fi
+    # Update the theme
     pywalfox update
     ;;
 
@@ -266,13 +277,13 @@ cava)
 niri)
     echo "🎨 Applying 'noctalia' theme to niri..."
     CONFIG_FILE="$HOME/.config/niri/config.kdl"
-    INCLUDE_LINE='\ninclude "./noctalia.kdl"\n'
+    INCLUDE_LINE='include "./noctalia.kdl"'
 
     # Check if the config file exists.
     if [ ! -f "$CONFIG_FILE" ]; then
         echo "Config file not found, creating $CONFIG_FILE..."
         mkdir -p "$(dirname "$CONFIG_FILE")"
-        echo "$INCLUDE_LINE" >"$CONFIG_FILE"
+        echo -e "\n$INCLUDE_LINE\n" >"$CONFIG_FILE"
         echo "Created new config file with noctalia theme."
     else
         # Check if include line already exists
@@ -280,7 +291,7 @@ niri)
             echo "Theme already included, skipping modification."
         else
             # Add the include line to the end of the file
-            echo "$INCLUDE_LINE" >>"$CONFIG_FILE"
+            echo -e "\n$INCLUDE_LINE\n" >>"$CONFIG_FILE"
             echo "✅ Added noctalia theme include to config."
         fi
     fi
@@ -289,13 +300,13 @@ niri)
 hyprland)
     echo "🎨 Applying 'noctalia' theme to Hyprland..."
     CONFIG_FILE="$HOME/.config/hypr/hyprland.conf"
-    INCLUDE_LINE="\nsource = ~/.config/hypr/noctalia/noctalia-colors.conf\n"
+    INCLUDE_LINE="source = ~/.config/hypr/noctalia/noctalia-colors.conf"
 
     # Check if the config file exists.
     if [ ! -f "$CONFIG_FILE" ]; then
         echo "Config file not found, creating $CONFIG_FILE..."
         mkdir -p "$(dirname "$CONFIG_FILE")"
-        echo "$INCLUDE_LINE" >"$CONFIG_FILE"
+        echo -e "\n$INCLUDE_LINE\n" >"$CONFIG_FILE"
         echo "Created new config file with noctalia theme."
     else
         # Check if include line already exists
@@ -303,7 +314,7 @@ hyprland)
             echo "Theme already included, skipping modification."
         else
             # Add the include line to the end of the file
-            echo "$INCLUDE_LINE" >>"$CONFIG_FILE"
+            echo -e "\n$INCLUDE_LINE\n" >>"$CONFIG_FILE"
             echo "✅ Added noctalia theme include to config."
         fi
     fi
@@ -320,7 +331,7 @@ mango)
     THEME_FILE="$CONFIG_DIR/noctalia.conf"
     BACKUP_FILE="$CONFIG_DIR/theme.conf.bak"
     # This sources the noctalia theme file
-    SOURCE_LINE="\nsource = $THEME_FILE\n"
+    SOURCE_LINE="source = $THEME_FILE"
 
     # Color variables that should be moved to theme file
     COLOR_VARS="shadowscolor|rootcolor|bordercolor|focuscolor|maximizescreencolor|urgentcolor|scratchpadcolor|globalcolor|overlaycolor"
@@ -363,10 +374,10 @@ mango)
         if [ -f "$MAIN_CONFIG" ]; then
             echo "" >>"$MAIN_CONFIG"
             echo "# This sources the noctalia theme" >>"$MAIN_CONFIG"
-            echo "$SOURCE_LINE" >>"$MAIN_CONFIG"
+            echo -e "\n$SOURCE_LINE\n" >>"$MAIN_CONFIG"
         else
             echo "# This sources the noctalia theme" >"$MAIN_CONFIG"
-            echo "$SOURCE_LINE" >>"$MAIN_CONFIG"
+            echo -e "\n$SOURCE_LINE\n" >>"$MAIN_CONFIG"
         fi
 
         echo "✅ Added noctalia theme to config."
@@ -380,7 +391,30 @@ mango)
         echo "Warning: mmsg command not found, manual restart may be needed." >&2
     fi
     ;;
-
+btop)
+    echo "🎨 Applying 'noctalia' theme to btop..."
+    CONFIG_FILE="$HOME/.config/btop/btop.conf"
+    
+    if [ -f "$CONFIG_FILE" ]; then
+        if grep -q '^color_theme = "noctalia"' "$CONFIG_FILE"; then
+            echo "Theme already set to noctalia, skipping modification."
+        else
+            if grep -q '^color_theme = ' "$CONFIG_FILE"; then
+                sed -i 's/^color_theme = .*/color_theme = "noctalia"/' "$CONFIG_FILE"
+            else
+                echo 'color_theme = "noctalia"' >>"$CONFIG_FILE"
+            fi
+            echo "✅ Updated btop config to use noctalia theme."
+        fi
+        
+        if pgrep -x btop >/dev/null; then
+            echo "Reloading btop..."
+            pkill -SIGUSR2 -x btop
+        fi
+    else
+        echo "Warning: btop config file not found at $CONFIG_FILE" >&2
+    fi
+    ;;
 *)
     # Handle unknown application names.
     echo "Error: Unknown application '$APP_NAME'." >&2

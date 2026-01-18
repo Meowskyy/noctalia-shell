@@ -30,6 +30,19 @@ Singleton {
                                           "wezterm": "~/.config/wezterm/colors/Noctalia.toml"
                                         })
 
+  // Check if a template is enabled in the activeTemplates array
+  function isTemplateEnabled(templateId) {
+    const activeTemplates = Settings.data.templates.activeTemplates;
+    if (!activeTemplates)
+      return false;
+    for (let i = 0; i < activeTemplates.length; i++) {
+      if (activeTemplates[i].id === templateId && activeTemplates[i].enabled) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function escapeTomlString(value) {
     if (!value)
       return "";
@@ -88,17 +101,17 @@ Singleton {
 
     TemplateRegistry.applications.forEach(app => {
                                             if (app.id === "discord") {
-                                              if (Settings.data.templates.discord) {
+                                              if (isTemplateEnabled("discord")) {
                                                 const items = buildDiscordTemplateItems(app, colors, homeDir);
                                                 items.forEach(item => queue.push(item));
                                               }
                                             } else if (app.id === "code") {
-                                              if (Settings.data.templates.code) {
+                                              if (isTemplateEnabled("code")) {
                                                 const items = buildCodeTemplateItems(app, colors, homeDir);
                                                 items.forEach(item => queue.push(item));
                                               }
                                             } else {
-                                              if (Settings.data.templates[app.id]) {
+                                              if (isTemplateEnabled(app.id)) {
                                                 const items = buildAppTemplateItems(app, colors, mode, homeDir, schemeData);
                                                 items.forEach(item => queue.push(item));
                                               }
@@ -148,7 +161,7 @@ Singleton {
 
     // Terminal templates
     TemplateRegistry.terminals.forEach(terminal => {
-                                         if (Settings.data.templates[terminal.id]) {
+                                         if (isTemplateEnabled(terminal.id)) {
                                            lines.push(`\n[templates.${terminal.id}]`);
                                            lines.push(`input_path = "${Quickshell.shellDir}/Assets/MatugenTemplates/${terminal.matugenPath}"`);
                                            const outputPath = terminal.outputPath.replace("~", homeDir);
@@ -165,7 +178,7 @@ Singleton {
     TemplateRegistry.applications.forEach(app => {
                                             if (app.id === "discord") {
                                               // Handle Discord clients specially
-                                              if (Settings.data.templates.discord) {
+                                              if (isTemplateEnabled("discord")) {
                                                 app.clients.forEach(client => {
                                                                       // Check if this specific client is detected
                                                                       if (isDiscordClientEnabled(client.name)) {
@@ -178,7 +191,7 @@ Singleton {
                                               }
                                             } else if (app.id === "code") {
                                               // Handle Code clients specially
-                                              if (Settings.data.templates.code) {
+                                              if (isTemplateEnabled("code")) {
                                                 app.clients.forEach(client => {
                                                                       // Check if this specific client is detected
                                                                       if (isCodeClientEnabled(client.name)) {
@@ -190,7 +203,7 @@ Singleton {
                                                                     });
                                               }
                                             } else if (app.id === "emacs" && app.checkDoomFirst) {
-                                              if (Settings.data.templates.emacs) {
+                                              if (isTemplateEnabled("emacs")) {
                                                 const doomPathTemplate = app.outputs[0].path; // ~/.config/doom/themes/noctalia-theme.el
                                                 const standardPathTemplate = app.outputs[1].path; // ~/.emacs.d/themes/noctalia-theme.el
                                                 const doomPath = doomPathTemplate.replace("~", homeDir);
@@ -209,7 +222,7 @@ Singleton {
                                               }
                                             } else {
                                               // Handle regular apps
-                                              if (Settings.data.templates[app.id]) {
+                                              if (isTemplateEnabled(app.id)) {
                                                 app.outputs.forEach((output, idx) => {
                                                                       lines.push(`\n[templates.${app.id}_${idx}]`);
                                                                       const inputFile = output.input || app.input;
@@ -404,8 +417,9 @@ Singleton {
     let expressions = [];
 
     Object.keys(colors).forEach(colorKey => {
-                                  const hexValue = colors[colorKey].default.hex;
-                                  const hexStrippedValue = colors[colorKey].default.hex_stripped;
+                                  const colorData = colors[colorKey].default;
+                                  const hexValue = colorData.hex;
+                                  const hexStrippedValue = colorData.hex_stripped;
 
                                   const escapedHex = hexValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                                   const escapedHexStripped = hexStrippedValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -413,6 +427,11 @@ Singleton {
                                   // Batch all replacements into a single sed command to avoid ARG_MAX limits
                                   expressions.push(`-e 's/{{colors\\.${colorKey}\\.default\\.hex_stripped}}/${escapedHexStripped}/g'`);
                                   expressions.push(`-e 's/{{colors\\.${colorKey}\\.default\\.hex}}/${escapedHex}/g'`);
+
+                                  // HSL components
+                                  expressions.push(`-e 's/{{colors\\.${colorKey}\\.default\\.hue}}/${colorData.hue}/g'`);
+                                  expressions.push(`-e 's/{{colors\\.${colorKey}\\.default\\.saturation}}/${colorData.saturation}/g'`);
+                                  expressions.push(`-e 's/{{colors\\.${colorKey}\\.default\\.lightness}}/${colorData.lightness}/g'`);
                                 });
     return `sed -i ${expressions.join(' ')} '${filePath}'\n`;
   }
@@ -422,24 +441,28 @@ Singleton {
 
     // Replace dark mode patterns
     Object.keys(darkColors).forEach(colorKey => {
-                                      const hexValue = darkColors[colorKey].default.hex;
-                                      const hexStrippedValue = darkColors[colorKey].default.hex_stripped;
-                                      const escapedHex = hexValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                                      const escapedHexStripped = hexStrippedValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                                      const colorData = darkColors[colorKey].default;
+                                      const escapedHex = colorData.hex.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                                      const escapedHexStripped = colorData.hex_stripped.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
                                       expressions.push(`-e 's/{{colors\\.${colorKey}\\.dark\\.hex_stripped}}/${escapedHexStripped}/g'`);
                                       expressions.push(`-e 's/{{colors\\.${colorKey}\\.dark\\.hex}}/${escapedHex}/g'`);
+                                      expressions.push(`-e 's/{{colors\\.${colorKey}\\.dark\\.hue}}/${colorData.hue}/g'`);
+                                      expressions.push(`-e 's/{{colors\\.${colorKey}\\.dark\\.saturation}}/${colorData.saturation}/g'`);
+                                      expressions.push(`-e 's/{{colors\\.${colorKey}\\.dark\\.lightness}}/${colorData.lightness}/g'`);
                                     });
 
     // Replace light mode patterns
     Object.keys(lightColors).forEach(colorKey => {
-                                       const hexValue = lightColors[colorKey].default.hex;
-                                       const hexStrippedValue = lightColors[colorKey].default.hex_stripped;
-                                       const escapedHex = hexValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                                       const escapedHexStripped = hexStrippedValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                                       const colorData = lightColors[colorKey].default;
+                                       const escapedHex = colorData.hex.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                                       const escapedHexStripped = colorData.hex_stripped.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
                                        expressions.push(`-e 's/{{colors\\.${colorKey}\\.light\\.hex_stripped}}/${escapedHexStripped}/g'`);
                                        expressions.push(`-e 's/{{colors\\.${colorKey}\\.light\\.hex}}/${escapedHex}/g'`);
+                                       expressions.push(`-e 's/{{colors\\.${colorKey}\\.light\\.hue}}/${colorData.hue}/g'`);
+                                       expressions.push(`-e 's/{{colors\\.${colorKey}\\.light\\.saturation}}/${colorData.saturation}/g'`);
+                                       expressions.push(`-e 's/{{colors\\.${colorKey}\\.light\\.lightness}}/${colorData.lightness}/g'`);
                                      });
 
     // Batch all replacements into a single sed command to avoid ARG_MAX limits
@@ -459,7 +482,7 @@ Singleton {
     const homeDir = Quickshell.env("HOME");
 
     Object.keys(terminalPaths).forEach(terminal => {
-                                         if (Settings.data.templates[terminal]) {
+                                         if (isTemplateEnabled(terminal)) {
                                            const outputPath = terminalPaths[terminal].replace("~", homeDir);
                                            const outputDir = outputPath.substring(0, outputPath.lastIndexOf('/'));
                                            const templatePaths = getTerminalColorsTemplate(terminal, mode);

@@ -83,7 +83,7 @@
     "language": "",
     "allowPanelsOnScreenWithoutBar": true,
     "showChangelogOnStartup": true,
-    "telemetryEnabled": true
+    "telemetryEnabled": false
   },
   "ui": {
     "fontDefault": "",
@@ -345,7 +345,8 @@
       "normalSoundFile": "",
       "lowSoundFile": "",
       "excludedApps": "discord,firefox,chrome,chromium,edge"
-    }
+    },
+    "enableMediaToast": false
   },
   "osd": {
     "enabled": true,
@@ -383,31 +384,7 @@
     "matugenSchemeType": "scheme-fruit-salad"
   },
   "templates": {
-    "gtk": false,
-    "qt": false,
-    "kcolorscheme": false,
-    "alacritty": false,
-    "kitty": false,
-    "ghostty": false,
-    "foot": false,
-    "wezterm": false,
-    "fuzzel": false,
-    "discord": false,
-    "pywalfox": false,
-    "vicinae": false,
-    "walker": false,
-    "code": false,
-    "spicetify": false,
-    "telegram": false,
-    "cava": false,
-    "yazi": false,
-    "emacs": false,
-    "niri": false,
-    "hyprland": false,
-    "mango": false,
-    "zed": false,
-    "helix": false,
-    "zenBrowser": false,
+    "activeTemplates": [],
     "enableUserTemplates": false
   },
   "nightLight": {
@@ -426,7 +403,8 @@
     "screenLock": "",
     "screenUnlock": "",
     "performanceModeEnabled": "",
-    "performanceModeDisabled": ""
+    "performanceModeDisabled": "",
+    "session": ""
   },
   "desktopWidgets": {
     "enabled": false,
