@@ -181,7 +181,7 @@ Singleton {
                                     "compactShowAlbumArt": true,
                                     "compactShowVisualizer": false,
                                     "enableScrollWheel": true,
-                                    "invertScrollWheel": false,
+                                    "reverseScroll": false,
                                   },
                                   "Microphone": {
                                     "displayMode": "onhover",
@@ -254,7 +254,7 @@ Singleton {
                                     "unfocusedIconsOpacity": 1.0,
                                     "groupedBorderOpacity": 1.0,
                                     "enableScrollWheel": true,
-                                    "iconScale": 0.8
+                                    "iconScale": 0.8,
                                     "focusedColor": "primary",
                                     "occupiedColor": "secondary",
                                     "emptyColor": "secondary",

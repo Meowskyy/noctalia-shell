@@ -30,7 +30,7 @@ ColumnLayout {
   property bool valuePanelEnabled: widgetData.panelEnabled !== undefined ? widgetData.panelEnabled : widgetMetadata.panelEnabled
   property bool valueCompactMode: widgetData.compactMode !== undefined ? widgetData.compactMode : widgetMetadata.compactMode
   property bool valueEnableScrollWheel: widgetData.enableScrollWheel !== undefined ? widgetData.enableScrollWheel : widgetMetadata.enableScrollWheel
-  property bool valueInvertScrollWheel: widgetData.invertScrollWheel !== undefined ? widgetData.invertScrollWheel : widgetMetadata.invertScrollWheel
+  property bool valueReverseScroll: widgetData.reverseScroll !== undefined ? widgetData.reverseScroll : widgetMetadata.reverseScroll
 
   Component.onCompleted: {
     if (widgetData && widgetData.hideMode !== undefined) {
@@ -54,7 +54,7 @@ ColumnLayout {
     settings.panelEnabled = valuePanelEnabled;
     settings.compactMode = valueCompactMode;
     settings.enableScrollWheel = valueEnableScrollWheel;
-    settings.invertScrollWheel = valueInvertScrollWheel;
+    settings.reverseScroll = valueReverseScroll;
     return settings;
   }
 
@@ -213,8 +213,8 @@ ColumnLayout {
   NToggle {
     label: I18n.tr("bar.media-mini.invert-scroll-wheel-label")
     description: I18n.tr("bar.media-mini.invert-scroll-wheel-description")
-    checked: valueInvertScrollWheel
-    onToggled: checked => valueInvertScrollWheel = checked
+    checked: valueReverseScroll
+    onToggled: checked => valueReverseScroll = checked
     visible: valueEnableScrollWheel === true
   }
 

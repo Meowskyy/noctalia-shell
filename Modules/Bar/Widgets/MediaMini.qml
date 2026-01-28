@@ -54,7 +54,7 @@ Item {
   readonly property bool useFixedWidth: (widgetSettings.useFixedWidth !== undefined) ? widgetSettings.useFixedWidth : widgetMetadata.useFixedWidth
   readonly property real maxWidth: (widgetSettings.maxWidth !== undefined) ? widgetSettings.maxWidth : Math.max(widgetMetadata.maxWidth, screen ? screen.width * 0.06 : 0)
   readonly property bool enableScrollWheel: (widgetSettings.enableScrollWheel !== undefined) ? widgetSettings.enableScrollWheel : widgetMetadata.enableScrollWheel
-  readonly property bool invertScrollWheel: (widgetSettings.invertScrollWheel !== undefined) ? widgetSettings.invertScrollWheel : widgetMetadata.invertScrollWheel
+  readonly property bool reverseScroll: (widgetSettings.reverseScroll !== undefined) ? widgetSettings.reverseScroll : widgetMetadata.reverseScroll
   readonly property bool panelEnabled: (widgetSettings.panelEnabled !== undefined) ? widgetSettings.panelEnabled : (widgetMetadata.panelEnabled !== undefined ? widgetMetadata.panelEnabled : false)
 
   // Wheel scroll handling
@@ -197,8 +197,8 @@ Item {
       var step = 120;
       if (Math.abs(root.wheelAccumulatedDelta) >= step) {
         var direction = root.wheelAccumulatedDelta > 0 ? -1 : 1;
-        if (root.invertScrollWheel) {
-          direction = -direction;
+        if (root.reverseScroll) {
+          direction = -1;
         }
 
         if (hasPlayer) {

@@ -608,7 +608,7 @@ Item {
 
     return Math.round(calculatedWidth);
   }
-  readonly property real contentHeight: visible ? (isVerticalBar ? Math.round(taskbarLayout.implicitHeight + Style.marginXL) : capsuleHeight) : 0
+  readonly property real contentHeight: visible ? (isVerticalBar ? Math.round(taskbarLayout.implicitHeight + Style.marginXL) : capsuleHeight + Style.marginXL) : 0
 
   implicitWidth: contentWidth
   implicitHeight: contentHeight
@@ -661,7 +661,7 @@ Item {
           readonly property color titleFgColor: ((isHovered || isFocused) && !root.fixedTextColor) ? Color.mOnHover : Color.mOnSurface
 
           Layout.preferredWidth: root.showTitle ? Math.round(contentWidth + Style.marginXL) : Math.round(contentWidth) // Add margins for both pinned and running apps
-          Layout.preferredHeight: root.itemSize
+          Layout.preferredHeight: root.itemSize + Style.marginXL
           Layout.alignment: Qt.AlignCenter
 
           // Ensure dragged item is on top
@@ -979,6 +979,6 @@ Item {
     // Set the model directly
     contextMenu.model = items;
 
-    PanelService.showContextMenu(contextMenu, item, screen);
+    PanelService.showContextMenu(contextMenu, root, screen);
   }
 }

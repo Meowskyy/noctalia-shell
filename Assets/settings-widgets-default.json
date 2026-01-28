@@ -109,7 +109,7 @@
       "compactShowAlbumArt": true,
       "compactShowVisualizer": false,
       "enableScrollWheel": true,
-      "invertScrollWheel": false
+      "reverseScroll": false
     },
     "Microphone": {
       "displayMode": "onhover",
@@ -181,7 +181,7 @@
       "unfocusedIconsOpacity": 1,
       "groupedBorderOpacity": 1,
       "enableScrollWheel": true,
-      "invertScrollWheel": false,
+      "reverseScroll": false,
       "iconScale": 0.8
     },
     "Volume": {

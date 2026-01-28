@@ -161,14 +161,6 @@ ColumnLayout {
     visible: valueEnableScrollWheel
   }
 
-  NToggle {
-    label: I18n.tr("bar.workspace.invert-scrollwheel-label")
-    description: I18n.tr("bar.workspace.invert-scrollwheel-description")
-    checked: valueInvertScrollWheel
-    onToggled: checked => valueInvertScrollWheel = checked
-    visible: valueEnableScrollWheel === true
-  }
-
   NDivider {
     Layout.fillWidth: true
   }
