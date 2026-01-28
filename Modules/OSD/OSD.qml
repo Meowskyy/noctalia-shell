@@ -420,16 +420,26 @@ Variants {
       anchors.left: isLeft
       anchors.right: isRight
 
+      readonly property string screenBarPosition: Settings.getBarPositionForScreen(root.modelData?.name)
+      readonly property real barHeight: Style.getBarHeightForScreen(root.modelData?.name)
+      readonly property bool isFramed: Settings.data.bar.barType === "framed"
+      readonly property real frameThickness: Settings.data.bar.frameThickness ?? 8
+
       function calculateMargin(isAnchored, position) {
         if (!isAnchored)
           return 0;
 
         let base = Style.marginM;
-        if (Settings.data.bar.position === position) {
+        if (screenBarPosition === position) {
           const isVertical = position === "top" || position === "bottom";
           const floatExtra = Math.ceil(Settings.data.bar.floating ? (isVertical ? Settings.data.bar.marginVertical : Settings.data.bar.marginHorizontal) : 0);
-          return Style.barHeight + base + floatExtra;
+          return barHeight + base + floatExtra;
         }
+
+        if (isFramed) {
+          return base + frameThickness;
+        }
+
         return base;
       }
 
@@ -736,17 +746,24 @@ Variants {
           }
         }
 
+        // Delay showing the OSD to allow the layout to settle after activation.
+        // Without this, the percentage text renders outside the box on first
+        // show.
+        Timer {
+          id: showDelayTimer
+          interval: 30
+          onTriggered: {
+            osdItem.visible = true;
+            osdItem.opacity = 1;
+            osdItem.scale = 1.0;
+            hideTimer.start();
+          }
+        }
+
         function show() {
           hideTimer.stop();
           visibilityTimer.stop();
-          osdItem.visible = true;
-
-          Qt.callLater(() => {
-                         osdItem.opacity = 1;
-                         osdItem.scale = 1.0;
-                       });
-
-          hideTimer.start();
+          showDelayTimer.start();
         }
 
         function hide() {

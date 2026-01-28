@@ -255,15 +255,16 @@ SmartPanel {
         NScrollView {
           id: scrollView
           anchors.fill: parent
-          ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-          ScrollBar.vertical.policy: ScrollBar.AsNeeded
-          clip: true
+          horizontalPolicy: ScrollBar.AlwaysOff
+          verticalPolicy: ScrollBar.AsNeeded
+          reserveScrollbarSpace: false
+          gradientColor: Color.mSurface
 
           // Track which notification is expanded
           property string expandedId: ""
 
           ColumnLayout {
-            width: parent.width
+            width: scrollView.availableWidth
             spacing: Style.marginM
 
             // Empty state when no notifications
@@ -334,7 +335,7 @@ SmartPanel {
 
                     property string notificationId: model.id
                     property bool isExpanded: scrollView.expandedId === notificationId
-                    property bool canExpand: summaryText.truncated || bodyText.truncated || (actionsList.length > 0) // Explicitly allow expand if actions exist
+                    property bool canExpand: summaryText.truncated || bodyText.truncated
 
                     // Parse actions safely
                     property var actionsList: {
@@ -470,31 +471,6 @@ SmartPanel {
                             visible: text.length > 0
                           }
 
-                          // Actions Flow
-                          Flow {
-                            width: parent.width
-                            spacing: Style.marginS
-                            visible: notificationDelegate.actionsList.length > 0
-
-                            Repeater {
-                              model: notificationDelegate.actionsList
-                              delegate: NButton {
-                                text: modelData.text
-                                fontSize: Style.fontSizeS
-                                backgroundColor: Color.mPrimary
-                                textColor: Color.mOnPrimary
-                                outlined: false
-                                implicitHeight: 24
-
-                                // Capture modelData in a property to avoid reference errors
-                                property var actionData: modelData
-                                onClicked: {
-                                  NotificationService.invokeAction(notificationDelegate.notificationId, actionData.identifier);
-                                }
-                              }
-                            }
-                          }
-
                           // Expand indicator
                           Row {
                             width: parent.width
@@ -520,6 +496,31 @@ SmartPanel {
                               color: Color.mPrimary
                             }
                           }
+
+                          // Actions Flow
+                          Flow {
+                            width: parent.width
+                            spacing: Style.marginS
+                            visible: notificationDelegate.actionsList.length > 0
+
+                            Repeater {
+                              model: notificationDelegate.actionsList
+                              delegate: NButton {
+                                text: modelData.text
+                                fontSize: Style.fontSizeS
+                                backgroundColor: Color.mPrimary
+                                textColor: Color.mOnPrimary
+                                outlined: false
+                                implicitHeight: 24
+
+                                // Capture modelData in a property to avoid reference errors
+                                property var actionData: modelData
+                                onClicked: {
+                                  NotificationService.invokeAction(notificationDelegate.notificationId, actionData.identifier);
+                                }
+                              }
+                            }
+                          }
                         }
 
                         // Delete button
@@ -538,39 +539,6 @@ SmartPanel {
                   }
                 }
               }
-            }
-          }
-        }
-
-        // Overlay gradient to smooth the hard cut due to scrolling at the bottom (only visible when scrollable)
-        Rectangle {
-          anchors.fill: parent
-          color: "transparent"
-          visible: scrollView.ScrollBar.vertical && scrollView.ScrollBar.vertical.size < 1.0
-          opacity: {
-            const scrollBar = scrollView.ScrollBar.vertical;
-            return (scrollBar.position + scrollBar.size >= 0.99) ? 0 : 1;
-          }
-
-          Behavior on opacity {
-            NumberAnimation {
-              duration: Style.animationFast
-              easing.type: Easing.InOutQuad
-            }
-          }
-
-          gradient: Gradient {
-            GradientStop {
-              position: 0.0
-              color: "transparent"
-            }
-            GradientStop {
-              position: 0.85
-              color: "transparent"
-            }
-            GradientStop {
-              position: 1.0
-              color: Qt.alpha(Color.mSurface, 0.95)
             }
           }
         }

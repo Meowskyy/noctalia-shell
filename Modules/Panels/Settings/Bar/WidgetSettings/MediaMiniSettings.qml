@@ -12,6 +12,8 @@ ColumnLayout {
   property var widgetData: null
   property var widgetMetadata: null
 
+  signal settingsChanged(var settings)
+
   // Local state
   property string valueHideMode: "hidden" // Default to 'Hide When Empty'
   // Deprecated: hideWhenIdle now folded into hideMode = "idle"
@@ -79,28 +81,40 @@ ColumnLayout {
       }
     ]
     currentKey: root.valueHideMode
-    onSelected: key => root.valueHideMode = key
+    onSelected: key => {
+                  root.valueHideMode = key;
+                  settingsChanged(saveSettings());
+                }
   }
 
   NToggle {
     label: I18n.tr("bar.media-mini.show-album-art-label")
     description: I18n.tr("bar.media-mini.show-album-art-description")
     checked: valueShowAlbumArt
-    onToggled: checked => valueShowAlbumArt = checked
+    onToggled: checked => {
+                 valueShowAlbumArt = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 
   NToggle {
     label: I18n.tr("bar.media-mini.show-artist-first-label")
     description: I18n.tr("bar.media-mini.show-artist-first-description")
     checked: valueShowArtistFirst
-    onToggled: checked => valueShowArtistFirst = checked
+    onToggled: checked => {
+                 valueShowArtistFirst = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 
   NToggle {
     label: I18n.tr("bar.media-mini.show-visualizer-label")
     description: I18n.tr("bar.media-mini.show-visualizer-description")
     checked: valueShowVisualizer
-    onToggled: checked => valueShowVisualizer = checked
+    onToggled: checked => {
+                 valueShowVisualizer = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 
   NComboBox {
@@ -122,7 +136,10 @@ ColumnLayout {
       }
     ]
     currentKey: valueVisualizerType
-    onSelected: key => valueVisualizerType = key
+    onSelected: key => {
+                  valueVisualizerType = key;
+                  settingsChanged(saveSettings());
+                }
     minimumWidth: 200
   }
 
@@ -133,20 +150,27 @@ ColumnLayout {
     description: I18n.tr("bar.media-mini.max-width-description")
     placeholderText: widgetMetadata.maxWidth
     text: valueMaxWidth
+    onEditingFinished: settingsChanged(saveSettings())
   }
 
   NToggle {
     label: I18n.tr("bar.media-mini.use-fixed-width-label")
     description: I18n.tr("bar.media-mini.use-fixed-width-description")
     checked: valueUseFixedWidth
-    onToggled: checked => valueUseFixedWidth = checked
+    onToggled: checked => {
+                 valueUseFixedWidth = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 
   NToggle {
     label: I18n.tr("bar.media-mini.show-progress-ring-label")
     description: I18n.tr("bar.media-mini.show-progress-ring-description")
     checked: valueShowProgressRing
-    onToggled: checked => valueShowProgressRing = checked
+    onToggled: checked => {
+                 valueShowProgressRing = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 
   NComboBox {
@@ -167,7 +191,10 @@ ColumnLayout {
       }
     ]
     currentKey: valueScrollingMode
-    onSelected: key => valueScrollingMode = key
+    onSelected: key => {
+                  valueScrollingMode = key;
+                  settingsChanged(saveSettings());
+                }
     minimumWidth: 200
   }
 
@@ -213,15 +240,19 @@ ColumnLayout {
     label: I18n.tr("bar.media-mini.show-album-art-label")
     description: I18n.tr("bar.media-mini.show-album-art-description")
     checked: valuePanelShowAlbumArt
-    onToggled: checked => valuePanelShowAlbumArt = checked
-    visible: valuePanelEnabled === true
+    onToggled: checked => {
+                 valuePanelShowAlbumArt = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 
   NToggle {
     label: I18n.tr("bar.media-mini.compact-mode-label")
     description: I18n.tr("bar.media-mini.compact-mode-description")
     checked: valueCompactMode
-    onToggled: checked => valueCompactMode = checked
-    visible: valuePanelEnabled === true
+    onToggled: checked => {
+                 valueCompactMode = checked;
+                 settingsChanged(saveSettings());
+               }
   }
 }

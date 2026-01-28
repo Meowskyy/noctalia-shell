@@ -46,7 +46,7 @@ ColumnLayout {
     // CPU Usage
     NText {
       text: I18n.tr("bar.system-monitor.cpu-usage-label")
-      pointSize: Style.fontSizeL
+      pointSize: Style.fontSizeM
     }
 
     NSpinBox {
@@ -79,7 +79,7 @@ ColumnLayout {
     // CPU Temperature
     NText {
       text: I18n.tr("bar.system-monitor.cpu-temperature-label")
-      pointSize: Style.fontSizeL
+      pointSize: Style.fontSizeM
     }
 
     NSpinBox {
@@ -113,7 +113,7 @@ ColumnLayout {
     NText {
       visible: SystemStatService.gpuAvailable
       text: I18n.tr("panels.system-monitor.gpu-section-label")
-      pointSize: Style.fontSizeL
+      pointSize: Style.fontSizeM
     }
 
     NSpinBox {
@@ -148,7 +148,7 @@ ColumnLayout {
     // Memory Usage
     NText {
       text: I18n.tr("bar.system-monitor.memory-usage-label")
-      pointSize: Style.fontSizeL
+      pointSize: Style.fontSizeM
     }
 
     NSpinBox {
@@ -178,10 +178,43 @@ ColumnLayout {
       onValueChanged: Settings.data.systemMonitor.memCriticalThreshold = value
     }
 
+    // Swap Usage
+    NText {
+      text: I18n.tr("bar.system-monitor.swap-usage-label")
+      pointSize: Style.fontSizeM
+    }
+
+    NSpinBox {
+      Layout.alignment: Qt.AlignHCenter
+      from: 0
+      to: 100
+      stepSize: 5
+      value: Settings.data.systemMonitor.swapWarningThreshold
+      defaultValue: Settings.getDefaultValue("systemMonitor.swapWarningThreshold")
+      suffix: "%"
+      onValueChanged: {
+        Settings.data.systemMonitor.swapWarningThreshold = value;
+        if (Settings.data.systemMonitor.swapCriticalThreshold < value) {
+          Settings.data.systemMonitor.swapCriticalThreshold = value;
+        }
+      }
+    }
+
+    NSpinBox {
+      Layout.alignment: Qt.AlignHCenter
+      from: Settings.data.systemMonitor.swapWarningThreshold
+      to: 100
+      stepSize: 5
+      value: Settings.data.systemMonitor.swapCriticalThreshold
+      defaultValue: Settings.getDefaultValue("systemMonitor.swapCriticalThreshold")
+      suffix: "%"
+      onValueChanged: Settings.data.systemMonitor.swapCriticalThreshold = value
+    }
+
     // Disk Usage
     NText {
       text: I18n.tr("panels.system-monitor.disk-section-label")
-      pointSize: Style.fontSizeL
+      pointSize: Style.fontSizeM
     }
 
     NSpinBox {
